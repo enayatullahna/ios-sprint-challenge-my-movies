@@ -39,7 +39,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="49" id="d7W-qE-xfL">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="49" id="d7W-qE-xfL" customClass="MovieSearchTableViewCell" customModule="MyMovies" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="414" height="49"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="d7W-qE-xfL" id="8Bc-u1-IMl">
@@ -58,6 +58,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QYD-Rx-nkq">
                                                     <rect key="frame" x="325" y="0.0" width="73" height="33"/>
                                                     <state key="normal" title="Add Movie"/>
+                                                    <connections>
+                                                        <action selector="addMovieTapped:" destination="d7W-qE-xfL" eventType="touchUpInside" id="dK6-2v-oJn"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
@@ -69,6 +72,10 @@
                                         <constraint firstItem="9pu-rP-rdG" firstAttribute="leading" secondItem="8Bc-u1-IMl" secondAttribute="leading" constant="8" id="rKZ-oL-Fzn"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="addMovieButton" destination="QYD-Rx-nkq" id="OGS-ai-W39"/>
+                                    <outlet property="movieTitleLabel" destination="FSI-9V-c8c" id="fW2-GB-jSA"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
