@@ -22,7 +22,7 @@ class MyMoviesTableViewController: UITableViewController, NSFetchedResultsContro
         return frc
     }()
     
-    
+    var movieController = MovieController()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -60,7 +60,7 @@ class MyMoviesTableViewController: UITableViewController, NSFetchedResultsContro
 
         let movie = self.fetchResultsController.object(at: indexPath)
         cell.movie = movie
-        cell.delegate = self
+        cell.delegate = self // need delegate
 
         return cell
     }
@@ -70,7 +70,7 @@ class MyMoviesTableViewController: UITableViewController, NSFetchedResultsContro
     //Delete function
     
     
-    //MARK: - NSFetchResultControllerDelegate
+    
     
     
 
@@ -78,10 +78,67 @@ class MyMoviesTableViewController: UITableViewController, NSFetchedResultsContro
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        // Get the new view controller using segue.destinationViewController.
+//        // Pass the selected object to the new view controller.
+//    }
     
+    //MARK: - NSFetchResultControllerDelegate
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+            self.tableView.beginUpdates()
+        }
+        
+        func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+            self.tableView.endUpdates()
+        }
+        
+        // sections
+        func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+            
+            switch type {
+            case .insert:
+                tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
+                
+            case .delete:
+                tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
+            default:
+                break
+            }
+        }
+        
+        // Rows
+        func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+            
+            switch type {
+                
+            case .insert:
+                guard let newIndexPath = newIndexPath else {return}
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            case .update:
+                guard let indexPath = indexPath else {return}
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            case .move:
+                guard let oldIndexPath = indexPath,
+                    let newIndexPath = newIndexPath else {return}
+                tableView.deleteRows(at: [oldIndexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            case .delete:
+                guard let indexPath = indexPath else {return}
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            default:
+                break
+            }
+        }
 
+}
+
+// extention
+extension MyMoviesTableViewController: MovieTableViewCellDelegate {
+        func hasWatchedTapped(cell: MyMoviesTableViewCell) {
+            guard let indexPath = self.tableView.indexPath(for: cell) else {return}
+            let movie = self.fetchResultsController.object(at: indexPath)
+            self.movieController.updateHasWatchedMovie(movie: movie)
+            tableView.reloadData()
+        }
 }

@@ -75,7 +75,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="addMovieButton" destination="QYD-Rx-nkq" id="OGS-ai-W39"/>
-                                    <outlet property="movieTitleLabel" destination="9pu-rP-rdG" id="Nws-1l-xuJ"/>
+                                    <outlet property="movieTitleLabel" destination="FSI-9V-c8c" id="AAk-N0-P5n"/>
                                     <outlet property="watchedButton" destination="QYD-Rx-nkq" id="5kh-rt-wfD"/>
                                 </connections>
                             </tableViewCell>

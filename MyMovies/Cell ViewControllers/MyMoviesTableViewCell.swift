@@ -10,7 +10,7 @@ import UIKit
 
 class MyMoviesTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var movieTitleLabel: UIStackView!
+    @IBOutlet weak var movieTitleLabel: UILabel!
     @IBOutlet weak var watchedButton: UIButton!
     
     
