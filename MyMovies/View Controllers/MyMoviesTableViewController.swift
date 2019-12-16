@@ -49,6 +49,29 @@ class MyMoviesTableViewController: UITableViewController, NSFetchedResultsContro
         return self.fetchResultsController.sections?[section].numberOfObjects ?? 0
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let sectionDetl = self.fetchResultsController.sections?[section] else { return nil }
+        return sectionDetl.name == "0" ? "Unwatched" : "Watched"
+    }
+
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyMovieCell", for: indexPath) as? MyMoviesTableViewCell else { return UITableViewCell() }
+
+        let movie = self.fetchResultsController.object(at: indexPath)
+        cell.movie = movie
+        cell.delegate = self
+
+        return cell
+    }
+    
+    //MARK: Delete function here
+    
+    //Delete function
+    
+    
+    //MARK: - NSFetchResultControllerDelegate
+    
     
 
     
